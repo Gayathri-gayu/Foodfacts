@@ -2,6 +2,7 @@ var fs=require('fs');
 var lineReader = require('readline').createInterface({
  input : fs.createReadStream('data/FoodFacts.csv') 
 });
+
 var i=0;
 var linearray=[];
 var headerline = 0;

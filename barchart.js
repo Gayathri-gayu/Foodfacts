@@ -72,8 +72,8 @@
           .attr("height", function (d) {
               return vertical(d.y0) - vertical(d.y + d.y0);
         })
-.transition().duration(3000)
-.delay(function(d,i){return i*200 ;})
+      .transition().duration(3000)
+      .delay(function(d,i){return i*200 ;})
       .attr("width", horizontal.rangeBand());
     
 

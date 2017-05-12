@@ -6,7 +6,7 @@ var margin={top:40, bottom:100, left:150, right:90},
     vertical=d3.scale.linear().rangeRound([height,0]);
 
 var x = d3.scale.ordinal()
-    .rangeRoundBands([0,width], 0.2,0.2);
+    .rangeRoundBands([0,width], 0.9,0.8);
 var	y = d3.scale.linear().range([height, 0]);
 
  var	xAxis = d3.svg.axis().scale(x)
@@ -35,6 +35,7 @@ var	svg = d3.select("#multiline")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
+
 d3.json("output/Multi-seriesline.json", function(error, data) {
 	data.forEach(function(d) {
 		d.country = d.country;
@@ -50,20 +51,22 @@ d3.json("output/Multi-seriesline.json", function(error, data) {
 	
 	y.domain([0, d3.max(data, function(d) { return Math.max(d.Fat, d.Protien,d.carbohydrates); })]);
 
+ //counrty Vs fat
 	svg.append("path")		
 		.attr("class", "line")
-    .style("stroke", "#006600")     //counrty Vs fat
+    .style("stroke", "#006600")    
 		.attr("d", valueline(data));
-
-
+  
+   //counrty Vs protein 
 	svg.append("path")		
 		.attr("class", "line")
-		.style("stroke", "#800000")  //counrty Vs protein
+		.style("stroke", "#800000") 
 		.attr("d", valueline2(data));
 
+//counrty Vs carbohyderate
     svg.append("path")		
       .attr("class", "line")
-      .style("stroke", "#0000b3")   //counrty Vs carbohyderate
+      .style("stroke", "#0000b3")   
       .attr("d", valueline3(data));
 
 
@@ -80,9 +83,7 @@ svg.append("g")
        .style("color","red")
        .text("Regions");
 
-	
-
-		svg.append("g")
+	 	svg.append("g")
     .attr("class", "axis")
     .call(yAxis)
     .append("text")
@@ -94,6 +95,5 @@ svg.append("g")
        .text("fat,protein,carbo");
 
        var text = svg.append("svg:text");
-
-       
+     
 });
