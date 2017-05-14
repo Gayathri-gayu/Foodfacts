@@ -1,38 +1,33 @@
-let margin={top:40, bottom:100, left:150, right:90},
+var margin={top:40, bottom:100, left:150, right:90},
     width=1000-margin.left-margin.right,
     height=600-margin.top-margin.bottom;
 
-  let horizontal=d3.scale.ordinal().rangeRoundBands([0,width],0.12),
+  var horizontal=d3.scale.ordinal().rangeRoundBands([0,width],0.12),
     vertical=d3.scale.linear().rangeRound([height,0]);
 
-let x = d3.scale.ordinal()
-    .rangeRoundBands([0,width], 0.9,0.8);
-let	y = d3.scale.linear().range([height, 0]);
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0,width], 1.0,0.9);
+var	y = d3.scale.linear().range([height, 0]);
 
- let	xAxis = d3.svg.axis().scale(x)
+ var	xAxis = d3.svg.axis().scale(x)
  	.orient("bottom");
 
-let	yAxis = d3.svg.axis().scale(y)
+var	yAxis = d3.svg.axis().scale(y)
 	.orient("left");
 
-/* tooltip*/
-
-
-
-
-let	valueline = d3.svg.line()
+var	valueline = d3.svg.line()
 	.x(function(d) { return x(d.country); })
 	.y(function(d) { return y(d.Fat); });
 
-let	valueline2 = d3.svg.line()
+var	valueline2 = d3.svg.line()
 	.x(function(d) { return x(d.country); })
 	.y(function(d) { return y(d.Protien); });
 
-  let	valueline3 = d3.svg.line()
+  var	valueline3 = d3.svg.line()
   	.x(function(d) { return x(d.country); })
   	.y(function(d) { return y(d.carbohydrates); });
 
-let	svg = d3.select("#multiline")
+var	svg = d3.select("#multiline")
 	.append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
@@ -40,7 +35,6 @@ let	svg = d3.select("#multiline")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-
 d3.json("output/Multi-seriesline.json", function(error, data) {
 	data.forEach(function(d) {
 		d.country = d.country;
@@ -56,22 +50,20 @@ d3.json("output/Multi-seriesline.json", function(error, data) {
 	
 	y.domain([0, d3.max(data, function(d) { return Math.max(d.Fat, d.Protien,d.carbohydrates); })]);
 
- //counrty Vs fat
 	svg.append("path")		
 		.attr("class", "line")
-    .style("stroke", "#006600")    
+    .style("stroke", "#006600")     //counrty Vs fat
 		.attr("d", valueline(data));
-  
-   //counrty Vs protein 
+
+
 	svg.append("path")		
 		.attr("class", "line")
-		.style("stroke", "#800000") 
+		.style("stroke", "#800000")  //counrty Vs protein
 		.attr("d", valueline2(data));
 
-//counrty Vs carbohyderate
     svg.append("path")		
       .attr("class", "line")
-      .style("stroke", "#0000b3")   
+      .style("stroke", "#0000b3")   //counrty Vs carbohyderate
       .attr("d", valueline3(data));
 
 
@@ -88,7 +80,9 @@ svg.append("g")
        .style("color","red")
        .text("Regions");
 
-	 	svg.append("g")
+	
+
+		svg.append("g")
     .attr("class", "axis")
     .call(yAxis)
     .append("text")
@@ -99,6 +93,7 @@ svg.append("g")
        .style("font-weight","bold")
        .text("fat,protein,carbo");
 
-       let text = svg.append("svg:text");
-     
+       var text = svg.append("svg:text");
+
+       
 });

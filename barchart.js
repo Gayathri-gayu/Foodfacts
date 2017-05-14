@@ -1,25 +1,25 @@
- let margin={top:40, bottom:100, left:150, right:90},
+ var margin={top:40, bottom:100, left:150, right:90},
     width=1000-margin.left-margin.right,
     height=600-margin.top-margin.bottom;
 
 // define x and y scales
 
-  let horizontal=d3.scale.ordinal().rangeRoundBands([0,width],0.12),
+  var horizontal=d3.scale.ordinal().rangeRoundBands([0,width],0.12),
     vertical=d3.scale.linear().rangeRound([height,0]);
 
-  let color = d3.scale.category10();
+  var color = d3.scale.category10();
 
-  let xAxis=d3.svg.axis()
+  var xAxis=d3.svg.axis()
     .scale(horizontal)
     .orient("bottom");
 
-  let yAxis=d3.svg.axis()
+  var yAxis=d3.svg.axis()
     .scale(vertical)
     .orient("left");
 
 // scalable vector graphics
 
-  let svg=d3.select("body").append("svg")
+  var svg=d3.select("body").append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -29,14 +29,19 @@
 
   d3.json("output/convertedTojson.json",function(err,data){
     if(err) console.log("data not loaded");
+    data.forEach(function(d){
+    d.country=d.country;
+    d.salt=d.salt;
+    d.sugar=d.sugar;
+  });
 
-  let xData=["sugar","salt"];
-  let dataIntermediate = xData.map(function (c) {
+  var xData=["sugar","salt"];
+  var dataIntermediate = xData.map(function (c) {
         return data.map(function (d) {
             return {x: d.country, y: d[c]};
         });
     });
-  let dataStackLayout = d3.layout.stack()(dataIntermediate);
+  var dataStackLayout = d3.layout.stack()(dataIntermediate);
 
   // specify x and y scales domain
 
@@ -48,7 +53,7 @@
                   function (d) { return d.y0 + d.y;})
       ])
       .nice();
-  let layer = svg.selectAll(".stack")
+  var layer = svg.selectAll(".stack")
           .data(dataStackLayout)
           .enter().append("g")
           .attr("class", "stack")
@@ -72,8 +77,8 @@
           .attr("height", function (d) {
               return vertical(d.y0) - vertical(d.y + d.y0);
         })
-      .transition().duration(3000)
-      .delay(function(d,i){return i*200 ;})
+.transition().duration(3000)
+.delay(function(d,i){return i*200 ;})
       .attr("width", horizontal.rangeBand());
     
 
@@ -89,7 +94,8 @@
       .attr("dx","1.2em")
       .style("font-size","15px")
       .style("font-weight","bold")
-      .text("country");
+      // .style("font-Color","red")
+      .text("Country");
 
   svg.append("g")
     .attr("class", "axis")
@@ -100,9 +106,10 @@
        .style("text-anchor", "end")
        .style("font-size","15px")
        .style("font-weight","bold")
-       .text("salt,sugar");
+       // .style("color","red")
+       .text("Sugar,salt");
 
-       let legend = svg.selectAll(".legend")
+       var legend = svg.selectAll(".legend")
          .data(color.domain().slice())
          .enter().append("g")
          .attr("class", "legend")
