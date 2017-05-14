@@ -1,33 +1,33 @@
-let margin={top:40, bottom:100, left:150, right:90},
+var margin={top:40, bottom:100, left:150, right:90},
     width=1000-margin.left-margin.right,
     height=600-margin.top-margin.bottom;
 
-  let horizontal=d3.scale.ordinal().rangeRoundBands([0,width],0.12),
+  var horizontal=d3.scale.ordinal().rangeRoundBands([0,width],0.12),
     vertical=d3.scale.linear().rangeRound([height,0]);
 
-let x = d3.scale.ordinal()
+var x = d3.scale.ordinal()
     .rangeRoundBands([0,width], 1.0,0.9);
-let	y = d3.scale.linear().range([height, 0]);
+var	y = d3.scale.linear().range([height, 0]);
 
- let	xAxis = d3.svg.axis().scale(x)
+ var	xAxis = d3.svg.axis().scale(x)
  	.orient("bottom");
 
-let	yAxis = d3.svg.axis().scale(y)
+var	yAxis = d3.svg.axis().scale(y)
 	.orient("left");
 
-let	valueline = d3.svg.line()
+var	valueline = d3.svg.line()
 	.x(function(d) { return x(d.country); })
 	.y(function(d) { return y(d.Fat); });
 
-let	valueline2 = d3.svg.line()
+var	valueline2 = d3.svg.line()
 	.x(function(d) { return x(d.country); })
 	.y(function(d) { return y(d.Protien); });
 
-  let	valueline3 = d3.svg.line()
+  var	valueline3 = d3.svg.line()
   	.x(function(d) { return x(d.country); })
   	.y(function(d) { return y(d.carbohydrates); });
 
-let	svg = d3.select("#multiline")
+var	svg = d3.select("#multiline")
 	.append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
@@ -93,7 +93,6 @@ svg.append("g")
        .style("font-weight","bold")
        .text("fat,protein,carbo");
 
-       let text = svg.append("svg:text");
+ });       
 
-       
-});
+
